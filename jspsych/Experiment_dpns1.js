@@ -233,6 +233,16 @@ var conditional_slider = {
   }
 };
 
+//question certi
+var confidence = {
+  type: jsPsychHtmlSliderResponse,
+  slider_start: 0,
+  require_movement: true,
+  labels: ['0<br>Not at all sure', '100<br>Very sure'],
+  stimulus: `<p>Please indicate how sure you are of your answer on a scale from 0 (not at all sure) to 100 (very sure).</p>`
+}
+
+
 //Attention check
 var attention_check = {
   type: jsPsychSurveyText,
@@ -245,85 +255,6 @@ var attention_check = {
     }
   ],
   button_label: 'Continue',
-}
-
-//Survey
-var instruction_questionnary = {
-  type: jsPsychHtmlButtonResponse,
-  stimulus:
-    "<p class='instructions_questionnary'>The first part of this study has been completed. You will now have to answer a series of questions about your points of view and personality.</p>",
-    choices: ['Continue']
-};
-
-///Questionnary cmq
-var cmq_label = [
-  "<br>0%<br><br>certainly not", 
-  "<br>10%<br><br>extremely unlikely",
-  "<br>20%<br><br>very unlikely",
-  "<br>30%<br><br>unlikely",
-  "<br>40%<br><br>somewhat unlikely",
-  "<br>50%<br><br>undecided",
-  "<br>60%<br><br>somewhat likely",
-  "<br>70%<br><br>likely",
-  "<br>80%<br><br>very likely", 
-  "<br>90%<br><br>extremely likely", 
-  "<br>100%<br><br>certainly"
-  ];
-          
-var cmq_questionnary = {
-  type: jsPsychSurveyLikert,
-  preamble:
-  "<p class='instructions_questionnary'>For each statement below, please choose the appropriate number to indicate the extent to which you think these statements are true.</br></p>"+ 
-  "<p class='instructions_questionnary'>There is no objectively true or false answer, we are interested in your personal opinions.</p>"+
-  "<p class='instructions_questionnary'>I think that...",
-  questions: [
-       {prompt: "...many very important things happen in the world, which the public is never informed about.", name: 'cmq_1', labels: cmq_label, required: true},
-       {prompt: "...politicians usually do not tell us the true motives for their decisions.", name: 'cmq_2', labels: cmq_label, required: true},
-       {prompt: "...government agencies closely monitor all citizens.", name: 'cmq_3', labels: cmq_label, required: true},
-       {prompt: "...events which superficially seem to lack a connection are often the result of secret activities.", name: 'cmq_4', labels: cmq_label, required: true},
-       {prompt: "...there are secret organizations that greatly influence political decisions.", name: 'cmq_5', labels: cmq_label, required: true},  
-  ],
-  required_error: "Please, answer all questions.",
-  button_label: 'Continue'
-}
-
-var bcti_label = [
-  "<br>1<br><br>Completely false",
-  "<br>2",
-  "<br>3",
-  "<br>4",
-  "<br>5",
-  "<br>6",
-  "<br>7",
-  "<br>8",
-  "<br>9<br><br>Completely true",
-  ];
-          
-var bcti_questionnary = {
-  type: jsPsychSurveyLikert,
-  preamble:
-  "<p class='instructions_questionnary'>For each statement below, please choose the appropriate number to indicate the extent to which you think these statements are true.</br></p>"+ 
-  "<p class='instructions_questionnary'>There is no objectively true or false answer, we are interested in your personal opinions.</p>"+
-  "<p class='instructions_questionnary'>I think that...</p>",
-  questions: [
-       {prompt: "A powerful and secretive group, known as the New World Order, are planning to eventually rule the world through an autonomous world government, which would replace sovereign government.", name: 'bcti_1', labels: bcti_label, required: true},
-       {prompt: "SARS (Severe Acute Respiratory Syndrome) was produced under laboratory conditions as a biological weapon.", name: 'bcti_2', labels: bcti_label, required: true},
-       {prompt: "The US government had foreknowledge about the Japanese attack on Pearl Harbour, but allowed the attack to take place so as to be able to enter the Second World War.", name: 'bcti_3', labels: bcti_label, required: true},
-       {prompt: "US agencies intentionally created the AIDS epidemic and administered it to Black and gay men in the 1970s.", name: 'bcti_4', labels: bcti_label, required: true},
-       {prompt: "The assassination of Martin Luther King, Jr., was the result of an organised conspiracy by US government agencies such as the CIA and FBI.", name: 'bcti_5', labels: bcti_label, required: true}, 
-       {prompt: "The Apollo moon landings never happened and were staged in a Hollywood film studio.", name: 'bcti_6', labels: bcti_label, required: true}, 
-       {prompt: "Area 51 in Nevada, US, is a secretive military base that contains hidden alien spacecraft and/or alien bodies.", name: 'bcti_7', labels: bcti_label, required: true}, 
-       {prompt: "The US government allowed the 9/11 attacks to take place so that it would have an excuse to achieve foreign (e.g., wars in Afghanistan and Iraq) and domestic (e.g., attacks on civil liberties) goals that had been determined prior to the attacks.", name: 'bcti_8', labels: bcti_label, required: true}, 
-       {prompt: "The assassination of John F. Kennedy was not committed by the lone gunman, Lee Harvey Oswald, but was rather a detailed, organised conspiracy to kill the President.", name: 'bcti_9', labels: bcti_label, required: true}, 
-       {prompt: "In July 1947, the US military recovered the wreckage of an alien craft from Roswell, New Mexico, and covered up the fact.", name: 'bcti_10', labels: bcti_label, required: true}, 
-       {prompt: "Princess Diana's death was not an accident, but rather an organised assassination by members of the British royal family who disliked her.", name: 'bcti_11', labels: bcti_label, required: true}, 
-       {prompt: "The Oklahoma City bombers, Timothy McVeigh and Terry Nichols, did not act alone, but rather received assistance from neo-Nazi groups.", name: 'bcti_12', labels: bcti_label, required: true},
-       {prompt: "The Coca Cola company intentionally changed to an inferior formula with the intent of driving up demand for their classic product, later reintroducing it for their financial gain.", name: 'bcti_13', labels: bcti_label, required: true},
-       {prompt: "Special interest groups are suppressing, or have suppressed in the past, technologies that could provide energy at reduced cost or reduced pollution output.", name: 'bcti_14', labels: bcti_label, required: true},
-       {prompt: "Government agencies in the UK are involved in the distribution of illegal drugs to ethnic minorities.", name: 'bcti_15', labels: bcti_label, required: true},
-  ],
-  required_error: "Please, answer all questions.",
-  button_label: 'Continue'
 }
 
 var instruction_demographic_questionnary = {
@@ -432,13 +363,11 @@ timeline.push
   welcome,
   consent,
   consigne,
-  procedure_testing,
+ // procedure_testing,
   question,
   conditional_slider,
+  confidence,
   attention_check,
-  instruction_questionnary,
-  cmq_questionnary,
-  bcti_questionnary,
   instruction_demographic_questionnary,
   genre,
   age,
