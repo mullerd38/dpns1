@@ -2,7 +2,7 @@
 
 // Copyright 2024 - Maude Tagand & Dominique Muller
 
-// New study with the goal to test delta p with our measure but now exposing participants XX
+// New study with the goal to test delta p with our measure but now exposing participants
 // to all the patients
 
 // Initialize jsPsych -----------------------------------------------------------------
