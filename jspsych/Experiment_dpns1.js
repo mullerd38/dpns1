@@ -101,7 +101,7 @@ var placebo_randomization = jsPsych.randomization.repeat(placebo, 6);
 var order_randomization = jsPsych.randomization.sampleWithoutReplacement(["medicine_first", "placebo_first"], 1)[0]
 var stim_randomization = [];
 
-for (var i = 0; i < 24; i++) { // 32 times med and pla (or pla and med), so 64 trials in total
+for (var i = 0; i < 24; i++) { // 24 times med and pla (or pla and med), so 48 trials in total
   if (order_randomization == "medicine_first"){
     stim_randomization.push(medicine_randomization.pop(), placebo_randomization.pop());
   } else if (order_randomization == "placebo_first"){
