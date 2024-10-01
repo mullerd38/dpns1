@@ -79,94 +79,40 @@ var consigne = {
 var stim = [
   {pilule: "medicine", correct_button: 0, diagnostic: "recovered", image: "jspsych/img/healthypeople.jpg", med_score: 1, pla_score: 0, pro: "medicine"},
   {pilule: "medicine", correct_button: 0, diagnostic: "recovered", image: "jspsych/img/healthypeople.jpg", med_score: 1, pla_score: 0, pro: "medicine"},
+  {pilule: "medicine", correct_button: 0, diagnostic: "recovered", image: "jspsych/img/healthypeople.jpg", med_score: 1, pla_score: 0, pro: "medicine"},
   {pilule: "medicine", correct_button: 0, diagnostic: "not recovered", image: "jspsych/img/sickpeople.jpg", med_score: -1, pla_score: 0, pro: "placebo"},
+  {pilule: "placebo", correct_button: 1, diagnostic: "recovered", image: "jspsych/img/healthypeople.jpg", med_score: 0, pla_score: 1, pro: "placebo"},
   {pilule: "placebo", correct_button: 1, diagnostic: "recovered", image: "jspsych/img/healthypeople.jpg", med_score: 0, pla_score: 1, pro: "placebo"},
   {pilule: "placebo", correct_button: 1, diagnostic: "recovered", image: "jspsych/img/healthypeople.jpg", med_score: 0, pla_score: 1, pro: "placebo"},
   {pilule: "placebo", correct_button: 1, diagnostic: "not recovered", image: "jspsych/img/sickpeople.jpg", med_score: 0, pla_score: -1, pro: "medicine"}
 ]
 
+//medicine_high means the "medicine better" button will be above
 var button_randomization = jsPsych.randomization.sampleWithoutReplacement(["medicine_high", "medicine_low"], 1)[0]
 
-var label_randomization = jsPsych.randomization.sampleWithoutReplacement(["medicine_left", "medicine_right"], 1)[0]
+var medicine = stim.filter(function(s){return s.pilule === "medicine"; }); // keep only medicine trials
+var placebo = stim.filter(function(s){return s.pilule === "placebo"; });
 
-var pro_medicine = stim.filter(function(s){return s.pro === "medicine"; });
-var pro_placebo = stim.filter(function(s){return s.pro === "placebo"; });
+var medicine_randomization = jsPsych.randomization.repeat(pmedicine, 6); // each is repeated 6 times, which gives 4*6 = 24
+var placebo_randomization = jsPsych.randomization.repeat(placebo, 6);
 
-var pro_medicine_randomization = jsPsych.randomization.repeat(pro_medicine, 4);
-var pro_placebo_randomization = jsPsych.randomization.repeat(pro_placebo, 4);
+// In conjunction, this gives MR = 18, MNR = 6 (p = ,75) and PR = 18, PNR = 6 (p = ,75)
 
-
-
-var order_randomization = jsPsych.randomization.sampleWithoutReplacement(["pro_medicine_first", "pro_placebo_first"], 1)[0]
+var order_randomization = jsPsych.randomization.sampleWithoutReplacement(["medicine_first", "placebo_first"], 1)[0]
 var stim_randomization = [];
 
-  if (order_randomization == "pro_medicine_first"){
-    stim_randomization.push(
-      pro_medicine_randomization.pop(),
-      pro_medicine_randomization.pop(),
-      pro_medicine_randomization.pop(),
-      pro_placebo_randomization.pop(),
-
-      pro_medicine_randomization.pop(),
-      pro_medicine_randomization.pop(),
-      pro_placebo_randomization.pop(),
-      pro_medicine_randomization.pop(),
-
-      pro_medicine_randomization.pop(),
-      pro_placebo_randomization.pop(),
-      pro_medicine_randomization.pop(),
-      pro_medicine_randomization.pop(),
-
-
-      pro_placebo_randomization.pop(),
-      pro_placebo_randomization.pop(),
-      pro_placebo_randomization.pop(),
-      pro_medicine_randomization.pop(),
-
-      pro_placebo_randomization.pop(),
-      pro_placebo_randomization.pop(),
-      pro_medicine_randomization.pop(),
-      pro_placebo_randomization.pop(),
-
-      pro_placebo_randomization.pop(),
-      pro_medicine_randomization.pop(),
-      pro_placebo_randomization.pop(),
-      pro_placebo_randomization.pop());
-
-  } else if (order_randomization == "pro_placebo_first"){
-    stim_randomization.push(
-      pro_placebo_randomization.pop(),
-      pro_placebo_randomization.pop(),
-      pro_placebo_randomization.pop(),
-      pro_medicine_randomization.pop(),
-
-      pro_placebo_randomization.pop(),
-      pro_placebo_randomization.pop(),
-      pro_medicine_randomization.pop(),
-      pro_placebo_randomization.pop(),
-
-      pro_placebo_randomization.pop(),
-      pro_medicine_randomization.pop(),
-      pro_placebo_randomization.pop(),
-      pro_placebo_randomization.pop(),
-      
-
-      pro_medicine_randomization.pop(),
-      pro_medicine_randomization.pop(),
-      pro_medicine_randomization.pop(),
-      pro_placebo_randomization.pop(),
-
-      pro_medicine_randomization.pop(),
-      pro_medicine_randomization.pop(),
-      pro_placebo_randomization.pop(),
-      pro_medicine_randomization.pop(),
-
-      pro_medicine_randomization.pop(),
-      pro_placebo_randomization.pop(),
-      pro_medicine_randomization.pop(),
-      pro_medicine_randomization.pop());
+for (var i = 0; i < 32; i++) { // 32 times med and pla (or pla and med), so 64 trials in total
+  if (order_randomization == "medicine_first"){
+    stim_randomization.push(medicine_randomization.pop(), placebo_randomization.pop());
+  } else if (order_randomization == "placebo_first"){
+    stim_randomization.push(placebo_randomization.pop(), medicine_randomization.pop());
   }
-
+}
+console.log(medicine);
+console.log(placebo);
+console.log(medicine_randomization);
+console.log(placebo_randomization);
+console.log(order_randomization);
 console.log(stim_randomization);
 
 var pilule_given = {
