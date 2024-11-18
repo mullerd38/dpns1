@@ -171,15 +171,15 @@ var question = {
       prompt: "<p>On the basis of the information you have gathered, you think that:</p>",
       options: function(){if (button_randomization == "medicine_high"){
         return [
-          "Patients have a better chance of recovery with the medicine",
-          "Patients have as much chance of recovery with the medicine as with the placebo",
-          "Patients have a better chance of recovery with the placebo"
+          "Patients are more likely to recover after receiving the medicine",
+          "Patients are equally likely to recover after receiving the medicine or the placebo",
+          "Patients are more likely to recover after receiving the placebo"
           ];
       } else if (button_randomization == "medicine_low"){
         return [
-          "Patients have a better chance of recovery with the placebo",
-          "Patients have as much chance of recovery with the medicine as with the placebo",
-          "Patients have a better chance of recovery with the medicine"
+          "Patients are more likely to recover after receiving the placebo",
+          "Patients are equally likely to recover after receiving the medicine or the placebo",
+          "Patients are more likely to recover after receiving the medicine"
         ];
       } else {
         return "<p>Erreur : réponse inattendue.</p>";
@@ -205,10 +205,12 @@ var slider = {
   stimulus: function() {
     var response = jsPsych.data.get().last().values()[0].response.Q0;
     var questionText = "";
-    if (response == "Patients have a better chance of recovery with the medicine") {
-      questionText = "How likely do you think people are to get better with the medicine?";
-    } else if (response == "Patients have a better chance of recovery with the placebo") {
-      questionText = "How likely do you think people are to get better with the placebo?";
+    if (response == "Patients are more likely to recover after receiving the medicine") {
+      questionText = "<p>You just said participants are better off to receive the medicine than the placebo.</p>" +
+      "To be more specific, how much more likely do you think patients who received the vaccine (instead of the placebo) are to recover?";
+    } else if (response == "Patients are more likely to recover after receiving the placebo") {
+      questionText = "<p>You just said participants are better off to receive the placebo than the medicine.</p>" +
+      "To be more specific, how much more likely do you think patients who received the placebo (instead of the medicine) are to recover?";
     } else {
       questionText = "Erreur : réponse inattendue.";
     }
@@ -225,7 +227,7 @@ var conditional_slider = {
   timeline: [slider],
   conditional_function: function() {
     var response = jsPsych.data.get().last().values()[0].response.Q0;
-    if (response == "Patients have as much chance of recovery with the medicine as with the placebo") {
+    if (response == "Patients are equally likely to recover after receiving the medicine or the placebo") {
       return false;
     } else {
       return true;
@@ -363,7 +365,7 @@ timeline.push
   welcome,
   consent,
   consigne,
-  procedure_testing,
+  //procedure_testing,
   question,
   conditional_slider,
   confidence,
