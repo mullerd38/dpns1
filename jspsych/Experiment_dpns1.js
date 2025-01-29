@@ -210,17 +210,29 @@ var slider = {
       "To be more specific, how much more likely do you think patients who received the medicine (instead of the placebo) are to recover?</p>";
     } else if (response == "Patients are more likely to recover after receiving the placebo") {
       questionText = "<p class='instructions'>You just said participants are better off to receive the placebo than the medicine.<br>" +
-      "To be more specific, how much more likely do you think patients who received the placebo (instead of the medicine) are to recover?";
+      "To be more specific, how much more likely do you think patients who received the placebo (instead of the medicine) are to recover?</p>";
     } else {
       questionText = "Erreur : réponse inattendue.";
     }
 
-    // Only return the question text here
     return `
         <p style="margin-bottom: 1px;">${questionText}</p>
         <p style="text-align: center; margin-top: 0px !important;"><em>(If you want to answer 1, simply click on the handle)</em></p>`;
   },
-  slider_width: 350 // Keep this as is to control slider size
+  slider_width: 350,
+  on_start: function(trial) {
+    // Initially hide the slider
+    document.querySelector('.jspsych-slider-container').style.display = 'none';
+  },
+  on_load: function() {
+    // Add a listener to show the slider when an option is clicked
+    const mcOptions = document.querySelectorAll('.jspsych-survey-multi-choice-option');
+    mcOptions.forEach(option => {
+      option.addEventListener('click', function() {
+        document.querySelector('.jspsych-slider-container').style.display = 'block';
+      });
+    });
+  }
 };
 
 var conditional_slider = {
