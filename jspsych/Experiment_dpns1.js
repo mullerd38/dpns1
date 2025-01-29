@@ -33,7 +33,7 @@ var welcome = {
   type: jsPsychHtmlButtonResponse,
   stimulus:
     "<h1 class ='custom-title'>Welcome</h1>" +
-    "<p class='instructions'>TEST5 Thank you for taking part in this survey. <b> Please note that you can only participate from a computer.</b> </p>" +
+    "<p class='instructions'>TEST6 Thank you for taking part in this survey. <b> Please note that you can only participate from a computer.</b> </p>" +
     "<p class='instructions'>We are going to ask you to imagine you are a medical researcher who wants to test the effectiveness of a medicine against a fictitious disease. " +
     "Your task will be to give your opinion on the effectiveness of this medicine. You will also have to answer some questions about your worldview.</p>" +
     "<p class='instructions'>If you have any question related to this research, please " +
@@ -216,7 +216,6 @@ var slider = {
       questionText = "Erreur : réponse inattendue.";
     }
 
-    // Return the question text
     return `
       <div id="question-text">
         <p style="margin-bottom: 1px;">${questionText}</p>
@@ -224,21 +223,39 @@ var slider = {
   },
   slider_width: 350,
   on_start: function() {
-    // Hide the slider handle and track initially by targeting the input[type="range"]
-    const sliderInput = document.querySelector('input[type="range"]');
-    if (sliderInput) {
-      sliderInput.style.visibility = 'hidden'; // Hide the slider
-    }
+    // Inject CSS to hide only the slider handle
+    var style = document.createElement('style');
+    style.innerHTML = `
+      .jspsych-content input[type="range"]::-webkit-slider-thumb {
+        visibility: hidden !important;
+      }
+      .jspsych-content input[type="range"]::-moz-range-thumb {
+        visibility: hidden !important;
+      }
+      .jspsych-content input[type="range"]::-ms-thumb {
+        visibility: hidden !important;
+      }
+    `;
+    document.head.appendChild(style);
   },
   on_load: function() {
-    // Add event listeners to show the slider when a choice is made
+    // Add event listeners to show the slider handle when a choice is made
     const mcOptions = document.querySelectorAll('.jspsych-survey-multi-choice-option');
     mcOptions.forEach(option => {
       option.addEventListener('click', function() {
-        const sliderInput = document.querySelector('input[type="range"]');
-        if (sliderInput) {
-          sliderInput.style.visibility = 'visible'; // Show the slider
-        }
+        var style = document.createElement('style');
+        style.innerHTML = `
+          .jspsych-content input[type="range"]::-webkit-slider-thumb {
+            visibility: visible !important;
+          }
+          .jspsych-content input[type="range"]::-moz-range-thumb {
+            visibility: visible !important;
+          }
+          .jspsych-content input[type="range"]::-ms-thumb {
+            visibility: visible !important;
+          }
+        `;
+        document.head.appendChild(style);
       });
     });
   }
