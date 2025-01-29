@@ -33,7 +33,7 @@ var welcome = {
   type: jsPsychHtmlButtonResponse,
   stimulus:
     "<h1 class ='custom-title'>Welcome</h1>" +
-    "<p class='instructions'>TEST6 Thank you for taking part in this survey. <b> Please note that you can only participate from a computer.</b> </p>" +
+    "<p class='instructions'>TEST7 Thank you for taking part in this survey. <b> Please note that you can only participate from a computer.</b> </p>" +
     "<p class='instructions'>We are going to ask you to imagine you are a medical researcher who wants to test the effectiveness of a medicine against a fictitious disease. " +
     "Your task will be to give your opinion on the effectiveness of this medicine. You will also have to answer some questions about your worldview.</p>" +
     "<p class='instructions'>If you have any question related to this research, please " +
@@ -225,6 +225,7 @@ var slider = {
   on_start: function() {
     // Inject CSS to hide only the slider handle
     var style = document.createElement('style');
+    style.id = 'hide-slider-handle';
     style.innerHTML = `
       .jspsych-content input[type="range"]::-webkit-slider-thumb {
         visibility: hidden !important;
@@ -243,19 +244,11 @@ var slider = {
     const mcOptions = document.querySelectorAll('.jspsych-survey-multi-choice-option');
     mcOptions.forEach(option => {
       option.addEventListener('click', function() {
-        var style = document.createElement('style');
-        style.innerHTML = `
-          .jspsych-content input[type="range"]::-webkit-slider-thumb {
-            visibility: visible !important;
-          }
-          .jspsych-content input[type="range"]::-moz-range-thumb {
-            visibility: visible !important;
-          }
-          .jspsych-content input[type="range"]::-ms-thumb {
-            visibility: visible !important;
-          }
-        `;
-        document.head.appendChild(style);
+        // Remove the CSS rule that hides the handle
+        var style = document.getElementById('hide-slider-handle');
+        if (style) {
+          style.remove();
+        }
       });
     });
   }
