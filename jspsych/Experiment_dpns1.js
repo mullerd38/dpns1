@@ -33,7 +33,7 @@ var welcome = {
   type: jsPsychHtmlButtonResponse,
   stimulus:
     "<h1 class ='custom-title'>Welcome</h1>" +
-    "<p class='instructions'>TEST Thank you for taking part in this survey. <b> Please note that you can only participate from a computer.</b> </p>" +
+    "<p class='instructions'>TEST2 Thank you for taking part in this survey. <b> Please note that you can only participate from a computer.</b> </p>" +
     "<p class='instructions'>We are going to ask you to imagine you are a medical researcher who wants to test the effectiveness of a medicine against a fictitious disease. " +
     "Your task will be to give your opinion on the effectiveness of this medicine. You will also have to answer some questions about your worldview.</p>" +
     "<p class='instructions'>If you have any question related to this research, please " +
@@ -198,17 +198,17 @@ var slider = {
   max: 50,
   step: 1,
   labels: [
-    '1<br>More likely', 
+    '1<br>More likely',
     '25<br>Clearly more likely',
     '50<br>Massively more likely'
   ],
   stimulus: function() {
-    var response = jsPsych.data.get().last().values()[0].response.Q0;
+    var response = jsPsych.data.get().last(1).values()[0].response.Q0;
     var questionText = "";
-    if (response == "Patients are more likely to recover after receiving the medicine") {
+    if (response === "Patients are more likely to recover after receiving the medicine") {
       questionText = "<p class='instructions'>You just said participants are better off to receive the medicine than the placebo.<br>" +
       "To be more specific, how much more likely do you think patients who received the medicine (instead of the placebo) are to recover?</p>";
-    } else if (response == "Patients are more likely to recover after receiving the placebo") {
+    } else if (response === "Patients are more likely to recover after receiving the placebo") {
       questionText = "<p class='instructions'>You just said participants are better off to receive the placebo than the medicine.<br>" +
       "To be more specific, how much more likely do you think patients who received the placebo (instead of the medicine) are to recover?</p>";
     } else {
@@ -216,20 +216,20 @@ var slider = {
     }
 
     return `
+      <div id="slider-container" style="display:none;">
         <p style="margin-bottom: 1px;">${questionText}</p>
-        <p style="text-align: center; margin-top: 0px !important;"><em>(If you want to answer 1, simply click on the handle)</em></p>`;
+        <p style="text-align: center; margin-top: 0px !important;"><em>(If you want to answer 1, simply click on the handle)</em></p>
+      </div>`;
   },
   slider_width: 350,
-  on_start: function(trial) {
-    // Initially hide the slider
-    document.querySelector('.jspsych-slider-container').style.display = 'none';
-  },
   on_load: function() {
-    // Add a listener to show the slider when an option is clicked
+    // Show slider when an option is clicked
     const mcOptions = document.querySelectorAll('.jspsych-survey-multi-choice-option');
+    const sliderContainer = document.getElementById('slider-container');
+
     mcOptions.forEach(option => {
       option.addEventListener('click', function() {
-        document.querySelector('.jspsych-slider-container').style.display = 'block';
+        sliderContainer.style.display = 'block';
       });
     });
   }
