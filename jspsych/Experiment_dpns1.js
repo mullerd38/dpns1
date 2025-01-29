@@ -33,7 +33,7 @@ var welcome = {
   type: jsPsychHtmlButtonResponse,
   stimulus:
     "<h1 class ='custom-title'>Welcome</h1>" +
-    "<p class='instructions'>TEST7 Thank you for taking part in this survey. <b> Please note that you can only participate from a computer.</b> </p>" +
+    "<p class='instructions'>TEST8 Thank you for taking part in this survey. <b> Please note that you can only participate from a computer.</b> </p>" +
     "<p class='instructions'>We are going to ask you to imagine you are a medical researcher who wants to test the effectiveness of a medicine against a fictitious disease. " +
     "Your task will be to give your opinion on the effectiveness of this medicine. You will also have to answer some questions about your worldview.</p>" +
     "<p class='instructions'>If you have any question related to this research, please " +
@@ -223,18 +223,21 @@ var slider = {
   },
   slider_width: 350,
   on_start: function() {
-    // Inject CSS to hide only the slider handle
+    // Inject CSS to hide only the slider handle using opacity and pointer-events
     var style = document.createElement('style');
     style.id = 'hide-slider-handle';
     style.innerHTML = `
       .jspsych-content input[type="range"]::-webkit-slider-thumb {
-        visibility: hidden !important;
+        opacity: 0;
+        pointer-events: none;
       }
       .jspsych-content input[type="range"]::-moz-range-thumb {
-        visibility: hidden !important;
+        opacity: 0;
+        pointer-events: none;
       }
       .jspsych-content input[type="range"]::-ms-thumb {
-        visibility: hidden !important;
+        opacity: 0;
+        pointer-events: none;
       }
     `;
     document.head.appendChild(style);
@@ -244,11 +247,23 @@ var slider = {
     const mcOptions = document.querySelectorAll('.jspsych-survey-multi-choice-option');
     mcOptions.forEach(option => {
       option.addEventListener('click', function() {
-        // Remove the CSS rule that hides the handle
-        var style = document.getElementById('hide-slider-handle');
-        if (style) {
-          style.remove();
-        }
+        // Make the slider handle fully visible and interactive
+        var style = document.createElement('style');
+        style.innerHTML = `
+          .jspsych-content input[type="range"]::-webkit-slider-thumb {
+            opacity: 1;
+            pointer-events: auto;
+          }
+          .jspsych-content input[type="range"]::-moz-range-thumb {
+            opacity: 1;
+            pointer-events: auto;
+          }
+          .jspsych-content input[type="range"]::-ms-thumb {
+            opacity: 1;
+            pointer-events: auto;
+          }
+        `;
+        document.head.appendChild(style);
       });
     });
   }
