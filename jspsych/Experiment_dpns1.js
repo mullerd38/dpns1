@@ -33,7 +33,7 @@ var welcome = {
   type: jsPsychHtmlButtonResponse,
   stimulus:
     "<h1 class ='custom-title'>Welcome</h1>" +
-    "<p class='instructions'>TEST3 Thank you for taking part in this survey. <b> Please note that you can only participate from a computer.</b> </p>" +
+    "<p class='instructions'>TEST4 Thank you for taking part in this survey. <b> Please note that you can only participate from a computer.</b> </p>" +
     "<p class='instructions'>We are going to ask you to imagine you are a medical researcher who wants to test the effectiveness of a medicine against a fictitious disease. " +
     "Your task will be to give your opinion on the effectiveness of this medicine. You will also have to answer some questions about your worldview.</p>" +
     "<p class='instructions'>If you have any question related to this research, please " +
@@ -215,25 +215,29 @@ var slider = {
       questionText = "Erreur : réponse inattendue.";
     }
 
-    // Return the question text along with the slider container (initially hidden)
+    // Return the question text
     return `
       <div id="question-text">
         <p style="margin-bottom: 1px;">${questionText}</p>
-      </div>
-      <div id="slider-container" style="display:none;">
-        <p style="text-align: center; margin-top: 0px !important;"><em>(If you want to answer 1, simply click on the handle)</em></p>
       </div>`;
   },
   slider_width: 350,
+  on_start: function() {
+    // Hide the slider handle initially
+    const sliderHandle = document.querySelector('.jspsych-slider-handle');
+    if (sliderHandle) {
+      sliderHandle.style.display = 'none'; // Hide only the slider handle
+    }
+  },
   on_load: function() {
-    // Get all multiple-choice options
+    // Add event listeners to reveal the slider handle when an option is clicked
     const mcOptions = document.querySelectorAll('.jspsych-survey-multi-choice-option');
-    const sliderContainer = document.getElementById('slider-container');
-
-    // Attach click event listeners to options
     mcOptions.forEach(option => {
       option.addEventListener('click', function() {
-        sliderContainer.style.display = 'block'; // Show the slider
+        const sliderHandle = document.querySelector('.jspsych-slider-handle');
+        if (sliderHandle) {
+          sliderHandle.style.display = 'block'; // Show the slider handle
+        }
       });
     });
   }
