@@ -33,7 +33,7 @@ var welcome = {
   type: jsPsychHtmlButtonResponse,
   stimulus:
     "<h1 class ='custom-title'>Welcome</h1>" +
-    "<p class='instructions'>TEST4 Thank you for taking part in this survey. <b> Please note that you can only participate from a computer.</b> </p>" +
+    "<p class='instructions'>TEST5 Thank you for taking part in this survey. <b> Please note that you can only participate from a computer.</b> </p>" +
     "<p class='instructions'>We are going to ask you to imagine you are a medical researcher who wants to test the effectiveness of a medicine against a fictitious disease. " +
     "Your task will be to give your opinion on the effectiveness of this medicine. You will also have to answer some questions about your worldview.</p>" +
     "<p class='instructions'>If you have any question related to this research, please " +
@@ -169,7 +169,8 @@ var question = {
   questions: [
     {
       prompt: "<p>On the basis of the information you have gathered, you think that:</p>",
-      options: function(){if (button_randomization == "medicine_high"){
+      options: function() {
+        if (button_randomization == "medicine_high"){
         return [
           "Patients are more likely to recover after receiving the medicine",
           "Patients are equally likely to recover after receiving the medicine or the placebo",
@@ -223,20 +224,20 @@ var slider = {
   },
   slider_width: 350,
   on_start: function() {
-    // Hide the slider handle initially
-    const sliderHandle = document.querySelector('.jspsych-slider-handle');
-    if (sliderHandle) {
-      sliderHandle.style.display = 'none'; // Hide only the slider handle
+    // Hide the slider handle and track initially by targeting the input[type="range"]
+    const sliderInput = document.querySelector('input[type="range"]');
+    if (sliderInput) {
+      sliderInput.style.visibility = 'hidden'; // Hide the slider
     }
   },
   on_load: function() {
-    // Add event listeners to reveal the slider handle when an option is clicked
+    // Add event listeners to show the slider when a choice is made
     const mcOptions = document.querySelectorAll('.jspsych-survey-multi-choice-option');
     mcOptions.forEach(option => {
       option.addEventListener('click', function() {
-        const sliderHandle = document.querySelector('.jspsych-slider-handle');
-        if (sliderHandle) {
-          sliderHandle.style.display = 'block'; // Show the slider handle
+        const sliderInput = document.querySelector('input[type="range"]');
+        if (sliderInput) {
+          sliderInput.style.visibility = 'visible'; // Show the slider
         }
       });
     });
